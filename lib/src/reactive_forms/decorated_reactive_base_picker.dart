@@ -15,6 +15,7 @@ class DecoratedReactiveBasePicker<T> extends StatelessWidget {
     this.icon,
     this.label,
     this.backgoroundColor,
+    this.validationMessages,
   }) : super(key: key);
 
   final String formControlName;
@@ -23,10 +24,11 @@ class DecoratedReactiveBasePicker<T> extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color backgoroundColor;
+  final ValidationMessagesFunction validationMessages;
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 52,
+      //  height: 52,
       child: ShadowCard(
         backGroundColor: backgoroundColor,
         child: Padding(
@@ -40,36 +42,36 @@ class DecoratedReactiveBasePicker<T> extends StatelessWidget {
                 onChanged: (value) {
                   print(value.toString());
                 },
+                validationMessages: validationMessages,
                 decoration: InputDecoration(
-                    isDense: true,
-                    isCollapsed: true, //The magic
-                    contentPadding:
-                        EdgeInsets.only(right: 8.0, top: 0.0, bottom: 0.0),
-                    prefixIcon: icon != null
-                        ? Container(
-                            margin:
-                                const EdgeInsets.fromLTRB(2.0, 2.0, 6.0, 2.0),
-                            decoration: BoxDecoration(
-                              color:
-                                  Theme.of(context).primaryColor.withAlpha(130),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            child: Icon(
-                              icon,
-                              size: 22,
-                              color: Colors.white,
-                            ))
-                        : null,
-                    border: InputBorder.none,
-                    labelText: label,
-                    labelStyle: TextStyle(height: 1.5)
+                  isDense: true,
+                  isCollapsed: true, //The magic
+                  contentPadding:
+                      EdgeInsets.only(right: 8.0, top: 0.0, bottom: 0.0),
+                  prefixIcon: icon != null
+                      ? Container(
+                          margin: const EdgeInsets.fromLTRB(2.0, 2.0, 6.0, 2.0),
+                          decoration: BoxDecoration(
+                            color:
+                                Theme.of(context).primaryColor.withAlpha(130),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          child: Icon(
+                            icon,
+                            size: 22,
+                            color: Colors.white,
+                          ))
+                      : null,
+                  border: InputBorder.none,
+                  labelText: label,
+                  labelStyle: TextStyle(height: 1.5),
 
-                    // errorStyle: TextStyle(
-                    //     height: 0.3,
-                    //     color: Theme.of(context).primaryColor,
-                    //     fontWeight: FontWeight.bold),
-                    ),
+                  errorStyle: TextStyle(
+                      height: 0.3,
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.bold),
+                ),
                 icon: Padding(
                   padding: const EdgeInsets.only(
                     left: 4,
