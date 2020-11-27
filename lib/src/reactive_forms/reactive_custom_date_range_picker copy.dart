@@ -11,7 +11,9 @@ import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 ///
 /// See also [ReactiveDatePickerDelegate].
 typedef ReactiveCustomDateRangePickerBuilder = Widget Function(
-    BuildContext context, ReactiveCustomDateRangePickerDelegate picker, Widget child);
+    BuildContext context,
+    ReactiveCustomDateRangePickerDelegate picker,
+    Widget child);
 
 /// This is a convenience widget that wraps the function
 /// [showDatePicker] in a [ReactiveDatePicker].
@@ -86,8 +88,8 @@ class ReactiveCustomDateRangePicker extends ReactiveFormField<DateTimeRange> {
                   field,
                   () => DateRagePicker.showDatePicker(
                               context: field.context,
-                              initialFirstDate: (field.value as DateTimeRange)?.start ?? initiaFirstDate,
-                              initialLastDate: (field.value as DateTimeRange)?.end ?? initialLastDate,
+                              initialFirstDate: initiaFirstDate,
+                              initialLastDate: initialLastDate,
                               firstDate: firstDate,
                               lastDate: lastDate)
                           .then((value) {
@@ -96,7 +98,8 @@ class ReactiveCustomDateRangePicker extends ReactiveFormField<DateTimeRange> {
                             //Si viene un solo elemto el rango es ese propio dia duplico
                             value.add(value.first);
                           }
-                          field.didChange(DateTimeRange(start: value[0], end: value[1]));
+                          field.didChange(
+                              DateTimeRange(start: value[0], end: value[1]));
                         }
                       }) /* showDateRangePicker(
                   context: field.context,
@@ -127,7 +130,8 @@ class ReactiveCustomDateRangePicker extends ReactiveFormField<DateTimeRange> {
         );
 
   @override
-  ReactiveFormFieldState<DateTimeRange> createState() => ReactiveFormFieldState<DateTimeRange>();
+  ReactiveFormFieldState<DateTimeRange> createState() =>
+      ReactiveFormFieldState<DateTimeRange>();
 }
 
 /// This class is responsible of showing the picker dialog.
@@ -137,10 +141,12 @@ class ReactiveCustomDateRangePickerDelegate {
   final ReactiveFormFieldState<DateTimeRange> _field;
   final VoidCallback _showPickerCallback;
 
-  ReactiveCustomDateRangePickerDelegate._(this._field, this._showPickerCallback);
+  ReactiveCustomDateRangePickerDelegate._(
+      this._field, this._showPickerCallback);
 
   /// Gets the control bound to the [ReactiveCustomDateRangePicker] widget
-  AbstractControl<DateTimeRange> get control => _field.control as AbstractControl<DateTimeRange>;
+  AbstractControl<DateTimeRange> get control =>
+      _field.control as AbstractControl<DateTimeRange>;
 
   /// Gets the value selected in the date picker.
   DateTimeRange get value => this.control.value;

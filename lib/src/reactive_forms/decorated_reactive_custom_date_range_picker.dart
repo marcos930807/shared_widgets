@@ -1,26 +1,24 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:reactive_forms/reactive_forms.dart';
-import '../utils/date_utils.dart';
-import '../base/shadow_card.dart';
+import 'package:shared_widgets/src/base/shadow_card.dart';
+import 'package:shared_widgets/src/utils/date_utils.dart';
 
-class DecoratedReactiveDatePicker extends StatelessWidget {
-  const DecoratedReactiveDatePicker({
+import 'reactive_custom_date_range_picker.dart';
+
+class DecoratedReactiveCustomDateRangePicker extends StatelessWidget {
+  const DecoratedReactiveCustomDateRangePicker({
     Key key,
     @required this.formControlName,
     this.label,
-    this.mandatory = false,
     this.backgroundColor,
   }) : super(key: key);
-  final Color backgroundColor;
   final String formControlName;
-  final bool mandatory;
+  final Color backgroundColor;
   final String label;
 
   @override
   Widget build(BuildContext context) {
     final icon = EvaIcons.calendarOutline;
-
     final decoration = InputDecoration(
       isDense: true,
       // filled: true,
@@ -39,13 +37,15 @@ class DecoratedReactiveDatePicker extends StatelessWidget {
               ))
           : null,
       border: InputBorder.none,
-      labelText: mandatory ? (label + ' *') : label,
+      labelText: label ?? 'Date',
       errorStyle: TextStyle(height: 0.3, color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold),
     );
     final InputDecoration effectiveDecoration = decoration.applyDefaults(
       Theme.of(context).inputDecorationTheme,
     );
-    return ReactiveDatePicker(
+    return ReactiveCustomDateRangePicker(
+      initiaFirstDate: oneWeekBefore(),
+      initialLastDate: DateTime.now(),
       formControlName: formControlName,
       builder: (context, picker, child) {
         return ShadowCard(
@@ -64,14 +64,23 @@ class DecoratedReactiveDatePicker extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: <Widget>[
-                        if (picker.value != null)
+                        if (picker.value != null) ...[
                           Text(
-                            picker.value?.toPipeFormatedDate,
+                            picker.value?.start?.toPipeFormatedDate,
                             style: TextStyle(fontSize: 16),
                           ),
-                        SizedBox(
-                          width: 5,
-                        ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text('-'),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            picker.value?.end?.toPipeFormatedDate,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ]
                       ],
                     ),
                   ),
