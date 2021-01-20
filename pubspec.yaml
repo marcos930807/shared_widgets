@@ -1,6 +1,6 @@
 name: shared_widgets
 description: A new Flutter package project.
-version: 0.0.2
+version: 0.0.3
 author: null
 homepage: null
 
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   simple_animations: ^2.2.3
-  reactive_forms: ^7.0.6
+  reactive_forms: ^8.0.1
   eva_icons_flutter: ^2.0.1
   intl: ^0.16.1
   date_range_picker: ^1.0.6
